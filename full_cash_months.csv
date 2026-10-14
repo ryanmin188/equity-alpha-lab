@@ -1,0 +1,7 @@
+﻿model,strategy,date,entry_date,exit_date,cash_weight,n_holdings,is_terminal_month
+EqualFactor,Buffer30_60,2020-06-30,2020-07-01,2020-08-03,1.0,0,True
+EqualFactor,Top30,2020-06-30,2020-07-01,2020-08-03,1.0,0,True
+LightGBM,Buffer30_60,2020-06-30,2020-07-01,2020-08-03,1.0,0,True
+LightGBM,Top30,2020-06-30,2020-07-01,2020-08-03,1.0,0,True
+Ridge,Buffer30_60,2020-06-30,2020-07-01,2020-08-03,1.0,0,True
+Ridge,Top30,2020-06-30,2020-07-01,2020-08-03,1.0,0,True

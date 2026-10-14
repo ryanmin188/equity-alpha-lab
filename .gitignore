@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# Local datasets and model artifacts
+.qlib/
+qlib_data/
+*.pkl
+*.pickle
+*.parquet
+*.npy
+*.npz
+
+# Research caches and bulk outputs
+scripts/equity_alpha_v2/outputs/
+outputs/
+data/
+datasets/
+cache/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Secrets and credentials
+*.key
+credentials.json
+secrets.json

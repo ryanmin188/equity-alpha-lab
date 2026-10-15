@@ -1,2 +1,0 @@
-instrument,record_date,ex_date,declared_cash_dividend_cny_per_raw_share,qlib_implied_raw_prev_close,qlib_implied_raw_ex_close,qlib_adjusted_return,hypothetical_raw_plus_gross_dividend_return,adjusted_minus_hypothetical_return_bp,source,verification
-SH601988,2024-07-16,2024-07-17,0.2364,4.88000015665,4.65999968168,0.00444043091271,0.00336055829991,10.798726128,https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2024-07-10/601988_20240710_CPYP.pdf,"Issuer action verified; raw quotes inferred from Qlib, not independent raw-price confirmation"

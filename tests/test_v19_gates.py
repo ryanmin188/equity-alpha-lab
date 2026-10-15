@@ -66,7 +66,7 @@ class ExternalDataGateTests(unittest.TestCase):
         self.assertEqual(result.instrument.iloc[0], 'S149')
 
     def test_published_independent_event_arithmetic(self):
-        path = Path(__file__).resolve().parents[1] / 'reports/summary/v19_independent_event_case.csv'
+        path = Path(__file__).resolve().parent / 'fixtures/v19_independent_event_case.csv'
         row = pd.read_csv(path).iloc[0]
         gross = (row.independent_raw_ex_close + row.issuer_gross_dividend_per_share) / row.independent_raw_prev_close - 1
         self.assertAlmostEqual(gross, row.raw_plus_gross_dividend_return)

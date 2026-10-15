@@ -23,6 +23,7 @@ qlib_data/
 # Research caches and bulk outputs
 scripts/equity_alpha_v2/outputs/
 outputs/
+reports/
 data/
 datasets/
 cache/

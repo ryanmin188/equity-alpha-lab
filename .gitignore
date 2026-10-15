@@ -35,3 +35,14 @@ Thumbs.db
 *.key
 credentials.json
 secrets.json
+
+# Large experiment outputs and credentials
+experiments/
+mlruns/
+*.egg-info/
+predictions.csv
+execution_audit.csv
+holdings_audit.csv
+*.pem
+*.p12
+*.pfx

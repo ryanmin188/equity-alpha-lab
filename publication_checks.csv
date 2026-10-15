@@ -1,9 +1,0 @@
-﻿check,passed,detail
-dashboard_exists,True,D:\QUANT\equity-alpha-lab\scripts\equity_alpha_v2\outputs\v1_csi300\v14_publication\research_dashboard.html
-report_exists,True,D:\QUANT\equity-alpha-lab\scripts\equity_alpha_v2\outputs\v1_csi300\v14_publication\RESEARCH_REPORT.md
-readme_exists,True,D:\QUANT\equity-alpha-lab\scripts\equity_alpha_v2\outputs\v1_csi300\v14_publication\README_GITHUB.md
-v14_manifest_integrity,True,All recorded files match
-research_scripts_exist,True,All expected source scripts found
-factor_report,True,D:\QUANT\equity-alpha-lab\scripts\equity_alpha_v2\outputs\v1_csi300\v12_factor_research\factor_research_report.md
-risk_report,True,D:\QUANT\equity-alpha-lab\scripts\equity_alpha_v2\outputs\v1_csi300\v13_risk_research\risk_research_report.md
-v11_audit,True,D:\QUANT\equity-alpha-lab\scripts\equity_alpha_v2\outputs\v1_csi300\v11_audit\audit_report.md

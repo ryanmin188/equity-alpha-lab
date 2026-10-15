@@ -1,0 +1,12 @@
+{
+  "status": "registered_before_first_future_signal",
+  "registered_local_date": "2026-10-15",
+  "frozen_strategy": "Equal8 + Buffer30/60 from V1.6; no feature, sign, portfolio, or cost changes",
+  "last_observed_account_date": "2026-10-08",
+  "first_eligible_new_signal": "first month-end close strictly after 2026-10-08 with independently dated and complete point-in-time inputs",
+  "signal_boundary": "archive score snapshot before next-session open; record source identifier and SHA256; never overwrite a prior date",
+  "current_implementation": "record_forward_signal.py archives Equal8 scores only; it does not yet reconstruct Buffer30/60 holdings or broker-paper trades",
+  "outcome_boundary": "future realized returns must be joined only after the return horizon matures and both original and any revised snapshots remain visible",
+  "publication": "publish aggregate dated hashes/status; keep per-security scores, holdings, orders and broker records local",
+  "success_claim": "no fresh predictive evidence until future signals are timestamped before outcomes and independently priced after maturity"
+}

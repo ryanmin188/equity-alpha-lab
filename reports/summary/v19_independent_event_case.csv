@@ -1,0 +1,2 @@
+instrument,record_date,ex_date,independent_raw_prev_close,independent_raw_ex_close,issuer_gross_dividend_per_share,raw_plus_gross_dividend_return,qlib_adjusted_return,qlib_minus_external_gross_return_bp,quote_source,event_source,scope
+SH601988,2024-07-16,2024-07-17,4.88,4.66,0.2364,0.00336065573770483,0.00444043091271,10.7977517500517,https://quote.cfi.cn/cgtj/6090/601988.html,https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2024-07-10/601988_20240710_CPYP.pdf,one-security one-ex-date gross-per-share check; no actual-share or cash-ledger verification

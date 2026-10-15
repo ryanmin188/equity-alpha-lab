@@ -1,0 +1,11 @@
+{
+  "observations": 667,
+  "beta": 0.3653037630044238,
+  "annualized_alpha_linear": 0.09003467557174587,
+  "alpha_hac_pvalue": 0.18917707796786565,
+  "alpha_ci95_low": -0.04436165356811161,
+  "alpha_ci95_high": 0.22443100471160338,
+  "mean_daily_excess_hac_pvalue": 0.8282302949647947,
+  "benchmark_max_drawdown": -0.15663632635639835,
+  "assumptions": "Zero risk-free rate; single price-index market factor; HAC lag5; post-selection inference not multiplicity adjusted"
+}

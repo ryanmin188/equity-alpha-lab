@@ -1,3 +1,5 @@
+> 版本归档：本文描述原V1.0—V1.5及其当时局限。V1.6的新测试、执行模型和结论请看[最新研究报告](V16_RESEARCH_REPORT.md)。
+
 # Equity Alpha Lab 2.0 — V1.5 Final Validation
 
 **Release status:** `RESEARCH_RELEASE_CANDIDATE`

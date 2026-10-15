@@ -1,3 +1,5 @@
+> 版本归档：本文描述原V1.0—V1.5及其当时局限。V1.6的新测试、执行模型和结论请看[最新研究报告](V16_RESEARCH_REPORT.md)。
+
 > 本次复核：已重跑通过；仍仅是内部恒等式检查，不是交易所成交或真实现金股数核验。
 
 # Equity Alpha Lab V1.1 — Account and Execution Audit

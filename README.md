@@ -1,69 +1,74 @@
 # Equity Alpha Lab 2.0
 
-**沪深300多因子选股：从预测信号到组合收益与风险归因**
-CSI300 factor research · rolling prediction · portfolio simulation · accounting audit
+**沪深300多因子选股研究｜时序验证、组合执行与风险分析**
 
-这是一个可用于量化研究面试的历史探索性研究项目。核心问题是：**预测排序能力，是否能转化为扣费后、相对基准的收益？**
+这个项目围绕一个问题展开：量价因子的预测排序，能否在考虑成本和成交约束后，转化为相对沪深300的收益？我保留了从简单因子、机器学习比较，到组合模拟和账户核对的完整过程，也保留了没有达到预期的实验。
 
-**研究结论：六个组合的历史累计模拟收益均为正，但均落后于同期沪深300价格指数；没有证据确立显著的正 alpha。** 评估区间已在开发中使用，不能称为未触碰的最终测试集。没有实盘或券商模拟盘记录。
+当前版本 **V1.6**。最终时间测试中，事先冻结的组合累计模拟收益 **37.71%**，同期沪深300价格指数 **27.10%**，领先 **10.61个百分点**；年化收益 **12.27%**，每日最大回撤 **−12.42%**。这是一段历史模拟，尚无实盘或券商模拟盘记录，统计证据也不足以确认稳定的正alpha。
 
-[研究报告](reports/RESEARCH_REPORT.md) · [流程审核](reports/METHODOLOGY_REVIEW.md) · [面试讲稿](reports/INTERVIEW_GUIDE.md) · [HTML 仪表盘文件](reports/research_dashboard.html) · [复现核对记录](reports/REPRODUCTION_CHECKS.json)
+[完整研究报告](reports/V16_RESEARCH_REPORT.md) · [冻结协议与参考来源](reports/V16_PROTOCOL_NOTES.md) · [面试讲稿](reports/INTERVIEW_GUIDE.md) · [账户核对记录](reports/V16_AUDIT.json) · [最终文件清单](FILE_STRUCTURE.md)
 
-## 30 秒了解项目
+![最终测试净值与回撤](reports/figures/v16_final_equity.png)
 
-- 历史沪深300成分区间，29,611 条股票月度观测，8 个量价因子。
-- EqualFactor、Ridge、LightGBM；按月滚动训练，最多回看48个月，仅使用已到期标签。
-- Top30 和 Buffer30/60 两种组合规则；6个组合、42个月、252条账户月度记录。
-- 因子 Rank IC、十分组、相关性、HAC检验；现金/持仓记账、拒单、陈旧估值、风险归因与成本敏感性。
-- 发布复核：六脚本完整重跑；五项核心输出与旧结果 SHA-256 完全一致；3项人工数据测试通过。
+## 研究设计与结果
 
-## 结果先与基准比较
+股票池使用Qlib历史沪深300成分区间；月末收盘形成信号，下一交易日开盘执行。比较8种信号与2种组合，共16个候选，涵盖等权因子、动量组合、Ridge、LightGBM、LambdaRank、排名集成和训练样本内因子筛选。扩展特征共28项，最多使用过去60个月已成熟的标签训练。
 
-持有区间：**2017-02-03 至 2020-08-03**，42个月；单边固定成本5bp。以下是整段累计收益，**不是年收益**。年化按12个月/年计算。最大回撤根据月频观测计算，不能当作日内或每日最大回撤。
+我将2020年以前使用过的数据作为开发样本，把2021—2023年用于选择，2024年起作为本次隔离的最终时间测试。未使用后两段做此前调整这一点来自项目使用者确认，不能替代第三方审计。选择规则、代码哈希和入选方案已在[打开最终测试前的提交](https://github.com/ryanmin188/equity-alpha-lab/commit/3a8663e50bb69dca774f9feff837bf70f46aa551)中保存；最终结果出来后没有再调参。
 
-| 模型 | 组合 | 累计模拟收益 | 年化收益 | 月频最大回撤 | 市场 Beta |
-|---|---|---:|---:|---:|---:|
-| EqualFactor | Buffer30_60 | 19.90% | 5.32% | -22.75% | 0.721 |
-| EqualFactor | Top30 | 16.36% | 4.42% | -22.69% | 0.736 |
-| LightGBM | Buffer30_60 | 27.33% | 7.15% | -29.01% | 1.271 |
-| LightGBM | Top30 | 27.98% | 7.30% | -30.13% | 1.248 |
-| Ridge | Buffer30_60 | 26.85% | 7.03% | -24.63% | 1.081 |
-| Ridge | Top30 | 18.52% | 4.97% | -27.71% | 1.091 |
-| **CSI300 基准** | **价格指数** | **39.66%** | **10.02%** | **-29.45%** | **1.000** |
+最后入选的是 **Equal8 + Buffer30/60**：8项因子按预定方向等权组合，优先保留仍排在前60的旧持仓，再补齐目标30只。它在验证期的信息比率最高，复杂模型没有胜过这一简单基线。
 
-基准来自 Qlib `SH000300` 同期开盘到开盘的价格指数收益，未模拟投资指数的费用，也未确认总回报指数口径。股票复权、分红与真实现金/股数尚需独立核对；比较不是可交易指数增强业绩证明。
+| 阶段 | 实际评估区间 | 冻结方案累计收益 | 同期基准 | 用途 |
+|---|---|---:|---:|---|
+| 开发 | 2017-02-03—2020-08-03 | 11.36% | 39.66% | 已用于研究，不能视为独立成绩 |
+| 验证 | 2021-01-04—2023-12-01 | 24.25% | −32.97% | 选择模型与组合 |
+| 最终测试 | 2024-01-02—2026-10-08 | **37.71%** | **27.10%** | 冻结后一次性评估 |
 
-![组合与沪深300基准](reports/figures/equity_vs_benchmark.png)
+只纳入完整月度持有区间，所以实际日期不等于整年边界。最终测试期间按冻结规则逐月使用当时已经到期的标签重新训练；这不意味着允许根据最终成绩更换模型。
 
-Ridge / LightGBM 的平均月度 Rank IC 为0.03672 / 0.03033，但HAC p值为0.08434 / 0.07172；模型间配对IC差异不显著。所有组合的市场模型年化截距点估计均为负，不能由正收益推出选股 alpha。[完整指标CSV](reports/summary/risk_attribution.csv)
+**关于“跑赢39.66%”：** 同一旧区间里，动量组合达到100.01%，LGB排名目标组合达到48.64%，但这些是开发期结果。前者验证期亏损21.94%，后者亏损30.98%，未按既定信息比率规则入选。正式冻结方案在旧区间并未跑赢39.66%；最终期则跑赢了它自己的同期基准。不同阶段、不同模型的成绩不能拼接成一个策略。
 
-## 七步量化流程：本项目覆盖到哪里
+![全部候选，包含负结果](reports/figures/v16_all_candidates.png)
 
-| 环节 | 已实现 | 当前边界 |
+所有候选指标：[开发期CSV](reports/summary/v16_development.csv) / [验证期CSV](reports/summary/v16_validation.csv) / [最终期CSV](reports/summary/v16_final.csv)。原V1.5的最高累计模拟收益为27.98%，低于同期39.66%，旧报告保留在[版本归档入口](reports/RESEARCH_REPORT.md)。新旧样本处理、成本与组合规则不同，不能将差异全部归因于某个新模型。
+
+## 执行约束与压力测试
+
+- 本金100万元；信号日收盘决定数量，次日开盘成交；先卖后买，不允许透支。
+- 佣金3bp、每笔最低5元，卖出印花税按2023-08-28分段，过户费采用固定假设；滑点5bp，另计平方根冲击。
+- 单笔容量不超过滞后20日平均成交额的1%；处理手数、零股退出、T+1、缺价和价格限制代理。
+- 目标单股权重上限5%、初始建仓后单次目标买卖总额上限80%；拒单与部分成交可能令实际持仓数超过30只。
+- 逐日记录现金、持仓、费用和陈旧估值；独立事件重放核对两组最终账户，最大现金/NAV误差小于0.00001元。
+
+把滑点改为0/5/15bp、资金改为100万/1000万元后，均完整重放账户。100万元、15bp滑点情景累计35.23%；1000万元、5bp情景累计29.78%，说明成本和规模会改变结果。
+
+![执行压力测试](reports/figures/v16_execution_stress.png)
+
+**执行边界：** 当前仍是日线近似，缺少盘口和开盘真实容量；ST/IPO正式限价资料不完整。Qlib复权单位映射不等于已核对真实股数、送转和现金分红。期末保留35只持仓，以开盘价估值，未扣以后清仓的费用。基准为价格指数，未计投资指数的费用，股票复权与基准总回报口径也未独立对齐。
+
+## 结果值得怎样解读
+
+最终期绝对收益和相对收益为正，但日频信息比率只有0.132。单市场因子回归的线性年化alpha约9.00%，HAC检验p=0.189，95%区间约[−4.44%, 22.44%]，不足以排除零alpha。平均日超额收益HAC检验p=0.828；累计领先不等于平均日超额显著。[统计口径与完整数据](reports/V16_RISK_STATISTICS.json)
+
+这个项目更适合展示：如何区分开发、选择和检验，如何处理回测账户，为什么保留负结果，以及为什么不因复杂模型或漂亮曲线就宣布策略成功。它不能证明未来一定盈利，也还不是经过交易验证的指数增强产品。
+
+## 七步流程完成到哪里
+
+| 环节 | 已完成 | 仍需补足 |
 |---|---|---|
-| 数据处理 | Qlib历史成分、日历、OHLCV；无穷值处理、横截面截尾标准化、训练集缺失值填补 | 依赖数据源；没有独立核对原始行情、公司行动和成分公告时点 |
-| 因子构建 | 动量、反转、波动、成交量、振幅、均线偏离，共8项 | 仅量价；没有基本面、行业中性化或多期限衰减 |
-| 策略搭建 | Top30等权、Buffer30/60保留/换股规则 | 简化的股票多头策略，不是高频或完整指数增强优化器 |
-| 模型训练 | 固定参数；历史滚动训练；标签到期过滤 | 缺少隔离的验证集选参与未触碰最终测试集 |
-| 分层回测 | Rank IC/十分组诊断；带成本的现金持仓账户 | 分组收益不是可交易多空收益；缺少真实撮合、冲击与完整费率 |
-| 策略优化 | 缓冲规则、分年度与成本情景比较 | 未完成宽参数平台、跨市场压力测试；成本情景是固定路径近似 |
-| 实盘风控 | 离线回撤、Beta、拒单、现金与陈旧估值诊断 | 尚无券商连接、事前限额、实时监控、熔断或实盘运维 |
+| 数据处理 | 历史成分、预热、缺失与覆盖率、时间截断检查 | 独立行情源、历史数据修订与公司行动核对 |
+| 因子构建 | 8因子基线、28项技术特征、训练样本内冗余筛选 | 基本面、行业/规模暴露、多期限衰减 |
+| 策略搭建 | 月频多头、缓冲换股、等权/逆波动权重 | 真实指数权重与行业风险约束 |
+| 模型训练 | 滚动成熟标签、Ridge/树/排序/集成比较 | 更长时期和跨市场稳健性 |
+| 分层回测 | 原版IC与分组；新版日频账户、成本和拒单 | 真实盘口撮合与第三方成交核对 |
+| 策略优化 | 16候选、验证选择、冻结最终测试、完整成本重放 | 宽参数稳定区间与更多独立时期 |
+| 实盘风控 | 本地向前账本、限额、T+1、重复事件和回撤拦截 | 券商连接、实时行情、真实向前成交与运维 |
 
-## 更多可直接查看的图表
+[向前账本使用方法](reports/FORWARD_PAPER_PLAN.md)。它不会把订单自动记为成交，目前没有真实向前业绩。仓库中的人工样本只验证程序行为。
 
-![因子十分组](reports/figures/factor_deciles.png)
+## 复现
 
-十分组仅对可观测未来收益做事后诊断，未计成本，缺失标签可能影响样本组成。
-
-![因子相关性](reports/figures/factor_correlation.png)
-
-![交易成本敏感性](reports/figures/cost_sensitivity.png)
-
-成本图使用固定交易路径的一阶近似，并非换费率后重跑账户。没有保证可以按5bp成交。
-
-## 本地复现
-
-使用 Python 3.12。`requirements.txt` 是原研究环境的直接依赖版本，`environment_versions.json` 是环境记录；它们不是含所有传递依赖的完整锁文件。此次在既有环境完整重跑成功，**没有验证全新机器的依赖安装**。
+Python 3.12；直接依赖见 `requirements.txt`，本次环境见 `environment_versions.json`。在既有环境成功重跑，尚未验证全新机器安装；版本清单不是完整传递依赖锁文件。
 
 ```powershell
 python -m venv .venv
@@ -71,45 +76,51 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-最后一条使用内存生成的虚构证券和价格，不需要行情数据；仍需安装上述Python库。覆盖无法卖出时的持仓保留、独立现金流水重算、未来标签缺失不改变交易，以及训练标签到期约束。测试通过不代表策略盈利。
+目前11项人工数据测试通过，不需要下载行情，但需安装依赖。覆盖独立记账、拒单、未来标签不影响交易、信号数量先于开盘、滞后成交额、税费切换、零股退出、训练标签到期及向前账本限制。
 
-### 行情准备
+### 数据准备
 
-请自行取得有使用权限的 Qlib CN 日频数据。参考 [Qlib 官方数据说明](https://github.com/microsoft/qlib/blob/main/docs/component/data.rst)。本仓库不附行情、不自动下载，不声称换用任何最新版数据都能复现相同数字。
+自行取得有权限使用的Qlib CN日频数据，参考[官方数据说明](https://github.com/microsoft/qlib/blob/main/docs/component/data.rst)。默认读取用户主目录 `.qlib/qlib_data/cn_data`，应包含 `calendars/day.txt`、`instruments/csi300.txt`、`features/`，以及股票 open/close/high/low/volume/factor 和基准 `SH000300` 的 open/close。
 
-默认路径为用户主目录下 `.qlib/qlib_data/cn_data`，应含 `calendars/day.txt`、`instruments/csi300.txt` 与 `features/`。必须提供2012-01-01至2020-08-31期间所需的历史成分区间、股票 open/close/high/low/volume，以及 `SH000300` 的 open。使用其他目录时修改 `run_research.py` 的 `QLIB_DATA`。匹配数据快照、复权定义和依赖环境才有可能重现历史数字；数据摘要见复现记录。
+V1.6需要2010-01-01起的预热历史；本次本地日历延伸至2026-10-12。仓库不分发行情，不自动下载。不同数据快照、成分历史或复权方式可能改变结果；本次缓存哈希见核对记录，哈希本身不证明数据质量。
 
-在仓库根目录依次运行：
+### V1.6运行顺序
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/equity_alpha_v2/run_research.py
-.\.venv\Scripts\python.exe scripts/equity_alpha_v2/audit_v11_accounting.py
-.\.venv\Scripts\python.exe scripts/equity_alpha_v2/research_v12_factors.py
-.\.venv\Scripts\python.exe scripts/equity_alpha_v2/research_v13_risk.py
-.\.venv\Scripts\python.exe scripts/equity_alpha_v2/build_v14_report.py
-.\.venv\Scripts\python.exe scripts/equity_alpha_v2/finalize_v15_release.py
+python scripts/equity_alpha_v2/research_v16_improvements.py --stage develop
+python scripts/equity_alpha_v2/research_v16_improvements.py --stage final
+python scripts/equity_alpha_v2/build_v16_report.py
 ```
 
-输出写入被Git忽略的 `scripts/equity_alpha_v2/outputs/v1_csi300/`。V1.4/V1.5脚本生成自动报告及基础发布包；首页、面试说明和审核注释是本次人工审核后的发布材料，不会自动随重跑更新。若改变数据或逻辑，必须同步重新核对发布报告，不能继续引用旧成绩。
+`develop`仅载入截至2023年的行情，训练/比较候选并冻结配置与代码哈希；`final`检查冻结状态后只运行选定组合和预先指定基线。最终阶段打开后禁止再运行开发或最终阶段，以免悄悄反复挑选结果。若运行中断，需保留失败记录，不能删除标记假装测试未打开。复现者已看过仓库结果，其重跑也不算一个新的未触碰测试。
 
-## HTML 怎么查看
+输出与大文件写入被Git忽略的 `scripts/equity_alpha_v2/outputs/v16_improvements/`。缓存与本地数据绑定；若更换数据，应使用独立研究副本和新协议，不能沿用旧缓存声称复现。报告生成器只更新V1.6报告、汇总与图表；README和面试稿需随经核对的结果同步维护。
 
-HTML是完整、独立的研究仪表盘，包含内嵌图像与脚本，可下载后在浏览器打开；它并非只能临时查看。GitHub文件页不会把它当网站执行。面试官无需打开HTML，也能在本页看到图表和结论，Markdown报告也可直接阅读。
+### 原V1.0—V1.5
 
-需要在线交互时，可另外用 [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site) 发布HTML。本次不把尚未部署的Pages地址写成已上线链接。
+六个原始脚本仍位于 `scripts/equity_alpha_v2/`，顺序为 `run_research.py` → `audit_v11_accounting.py` → `research_v12_factors.py` → `research_v13_risk.py` → `build_v14_report.py` → `finalize_v15_release.py`。原输出写入独立的 `outputs/v1_csi300/`。完整重跑的五项核心输出与原结果哈希一致，见[原版本复现记录](reports/REPRODUCTION_CHECKS.json)。原发布状态仅是研究内部检查通过。
 
-## 已知局限与下一步
+## 目录与展示
 
-1. 先冻结研究方案，新增未参与开发的时间段作最终测试，不能反复用2017–2020选策略。
-2. 核对真实价格、复权与分红，补涨跌停、停牌、手数、税费、滑点和冲击成本，再重跑账户。
-3. `volume_surprise` 当前实现的均量窗口是 t−21 至 t−2，跳过t−1；它仍只用历史数据，但不同于常见“前20日”定义。本次保留公式和历史结果；修订后需重新命名版本、重新评估。
-4. 评估行业、规模等暴露及因子冗余，检验增量信息与参数稳定性。
-5. 在历史证据足够后再做向前模拟与实时风控；本次历史重跑不属于向前模拟盘。
+```text
+equity-alpha-lab/
+├── README.md
+├── FILE_STRUCTURE.md
+├── requirements.txt
+├── environment_versions.json
+├── .gitignore
+├── configs/v16_protocol.json
+├── scripts/equity_alpha_v2/   # 原六脚本 + V1.6研究、执行、报告、向前账本
+├── tests/                    # 纯模拟样本测试
+└── reports/                  # 中文报告、冻结记录、图表和少量聚合指标
+    ├── figures/
+    └── summary/
+```
 
-`PASS_INTERNAL_IDENTITIES_ONLY` 仅表示模拟器输出的内部恒等式通过；`RESEARCH_RELEASE_CANDIDATE` 不表示实盘验收或稳定获利。
+GitHub首页直接展示净值、全部候选和执行压力图，Markdown报告也可直接读。[旧版HTML仪表盘](reports/research_dashboard.html)保留为V1.5归档，下载后可用浏览器打开；它没有包含V1.6新结果。GitHub文件页不执行HTML，本仓库未把尚未部署的Pages地址当作已上线页面。
 
-## 仓库内容与数据边界
+仓库排除行情、虚拟环境、缓存、逐股预测、交易/持仓明细和凭证。保留原始本地研究资料，发布包只包含展示与复现所需文件。
 
-保留源码、研究报告、静态图表、少量聚合指标和虚构样本测试。排除行情、`.venv/`、IDE配置、pickle面板、逐股预测、交易/持仓明细和凭证。未授予第三方数据的再分发许可；未额外添加未经作者确认的开源许可证。
+## 参考与工作说明
 
-For research and interview demonstration only. Historical simulation is not live performance or investment advice.
+Qlib提供数据和研究框架，LightGBM提供树与排序模型；特征、组合和评价方案参考其公开文档并在本项目内实现，详见[来源与实现边界](reports/V16_PROTOCOL_NOTES.md)。代码整理、测试和说明使用AI辅助，研究结论以实际运行记录为依据。面试时应能解释自己理解、核对和修改的部分，保留第三方贡献说明。

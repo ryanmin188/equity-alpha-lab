@@ -1,3 +1,5 @@
+> 版本归档：本文描述原V1.0—V1.5及其当时局限。V1.6的新测试、执行模型和结论请看[最新研究报告](V16_RESEARCH_REPORT.md)。
+
 > 本次复核：下文 Out-of-Sample 仅指滚动时序预测，不代表未触碰测试集。图像已在[首页](../README.md)展示；原Generated Figures清单是运行输出名称。
 
 # Equity Alpha Lab 2.0

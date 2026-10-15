@@ -1,6 +1,6 @@
-# 发布目录（V1.6）
+# 发布目录（V1.7归因审计）
 
-共52个文件。此清单仅列Git发布内容，不含本地行情、虚拟环境、缓存、预测或成交明细。
+共63个文件，含V1.6策略归档与V1.7事后分析。V1.7不包含逐股预测、交易明细或原始行情。
 
 ```text
 equity-alpha-lab/
@@ -8,7 +8,8 @@ equity-alpha-lab/
 ├── FILE_STRUCTURE.md
 ├── README.md
 ├── configs/
-│   └── v16_protocol.json
+│   ├── v16_protocol.json
+│   └── v17_attribution_protocol.json
 ├── environment_versions.json
 ├── reports/
 │   ├── ACCOUNT_AUDIT.md
@@ -27,6 +28,7 @@ equity-alpha-lab/
 │   ├── V16_RELEASE_CHECKS.json
 │   ├── V16_RESEARCH_REPORT.md
 │   ├── V16_RISK_STATISTICS.json
+│   ├── V17_RETURN_AND_MARKET_ATTRIBUTION.md
 │   ├── figures/
 │   │   ├── cost_sensitivity.png
 │   │   ├── equity_vs_benchmark.png
@@ -34,22 +36,31 @@ equity-alpha-lab/
 │   │   ├── factor_deciles.png
 │   │   ├── v16_all_candidates.png
 │   │   ├── v16_execution_stress.png
-│   │   └── v16_final_equity.png
+│   │   ├── v16_final_equity.png
+│   │   ├── v17_log_relative_decomposition.png
+│   │   └── v17_rolling_market_risk.png
 │   ├── research_dashboard.html
 │   └── summary/
 │       ├── cost_sensitivity.csv
+│       ├── market_attribution.csv
 │       ├── model_ic_summary.csv
+│       ├── return_convention_anomalies.csv
+│       ├── return_convention_audit.csv
 │       ├── risk_attribution.csv
 │       ├── v16_before_lot_fix_development.csv
 │       ├── v16_before_lot_fix_validation.csv
 │       ├── v16_development.csv
 │       ├── v16_execution_stress.csv
 │       ├── v16_final.csv
-│       └── v16_validation.csv
+│       ├── v16_validation.csv
+│       ├── v17_calendar_segments.csv
+│       ├── v17_market_regressions.csv
+│       └── v17_rolling_market_risk.csv
 ├── requirements.txt
 ├── scripts/
 │   └── equity_alpha_v2/
 │       ├── audit_v11_accounting.py
+│       ├── audit_v17_attribution.py
 │       ├── build_v14_report.py
 │       ├── build_v16_report.py
 │       ├── execution_v16.py
@@ -65,4 +76,4 @@ equity-alpha-lab/
     └── test_synthetic.py
 ```
 
-源码、报告、图表和汇总保持各自目录层级。原V1.0—V1.5报告保留并标注归档；V1.6见V16_RESEARCH_REPORT.md。
+公开的收益口径审计CSV不含逐日现金、持仓价值与成本金额；完整账户核对表保存在本地被Git忽略的输出目录。

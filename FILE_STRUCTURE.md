@@ -1,79 +1,47 @@
-# 发布目录（V1.7归因审计）
-
-共63个文件，含V1.6策略归档与V1.7事后分析。V1.7不包含逐股预测、交易明细或原始行情。
+# 公开仓库文件结构
 
 ```text
 equity-alpha-lab/
-├── .gitignore
+├── README.md                         # 面试官入口：问题、方法、结果、局限
 ├── FILE_STRUCTURE.md
-├── README.md
-├── configs/
-│   ├── v16_protocol.json
-│   └── v17_attribution_protocol.json
-├── environment_versions.json
-├── reports/
-│   ├── ACCOUNT_AUDIT.md
-│   ├── FACTOR_RESEARCH.md
-│   ├── FINAL_VALIDATION_REPORT.md
-│   ├── FORWARD_PAPER_PLAN.md
-│   ├── INTERVIEW_GUIDE.md
-│   ├── METHODOLOGY_REVIEW.md
-│   ├── REPRODUCTION_CHECKS.json
-│   ├── RESEARCH_REPORT.md
-│   ├── RISK_RESEARCH.md
-│   ├── V16_AUDIT.json
-│   ├── V16_FINAL_RUN.json
-│   ├── V16_FROZEN_SELECTION.json
-│   ├── V16_PROTOCOL_NOTES.md
-│   ├── V16_RELEASE_CHECKS.json
-│   ├── V16_RESEARCH_REPORT.md
-│   ├── V16_RISK_STATISTICS.json
-│   ├── V17_RETURN_AND_MARKET_ATTRIBUTION.md
-│   ├── figures/
-│   │   ├── cost_sensitivity.png
-│   │   ├── equity_vs_benchmark.png
-│   │   ├── factor_correlation.png
-│   │   ├── factor_deciles.png
-│   │   ├── v16_all_candidates.png
-│   │   ├── v16_execution_stress.png
-│   │   ├── v16_final_equity.png
-│   │   ├── v17_log_relative_decomposition.png
-│   │   └── v17_rolling_market_risk.png
-│   ├── research_dashboard.html
-│   └── summary/
-│       ├── cost_sensitivity.csv
-│       ├── market_attribution.csv
-│       ├── model_ic_summary.csv
-│       ├── return_convention_anomalies.csv
-│       ├── return_convention_audit.csv
-│       ├── risk_attribution.csv
-│       ├── v16_before_lot_fix_development.csv
-│       ├── v16_before_lot_fix_validation.csv
-│       ├── v16_development.csv
-│       ├── v16_execution_stress.csv
-│       ├── v16_final.csv
-│       ├── v16_validation.csv
-│       ├── v17_calendar_segments.csv
-│       ├── v17_market_regressions.csv
-│       └── v17_rolling_market_risk.csv
 ├── requirements.txt
-├── scripts/
-│   └── equity_alpha_v2/
-│       ├── audit_v11_accounting.py
-│       ├── audit_v17_attribution.py
-│       ├── build_v14_report.py
-│       ├── build_v16_report.py
-│       ├── execution_v16.py
-│       ├── finalize_v15_release.py
-│       ├── paper_journal.py
-│       ├── research_v12_factors.py
-│       ├── research_v13_risk.py
-│       ├── research_v16_improvements.py
-│       └── run_research.py
+├── environment_versions.json
+├── .gitignore
+├── configs/
+│   ├── v16_protocol.json             # 最终测试前的策略与选择规则
+│   ├── v17_attribution_protocol.json # 收益口径与市场归因
+│   └── v18_attribution_protocol.json # 逐股与CH-4事后归因口径
+├── scripts/equity_alpha_v2/
+│   ├── research_v16_improvements.py  # 开发、验证、冻结最终测试
+│   ├── execution_v16.py              # 日线模拟账户
+│   ├── attribute_v18_holdings.py     # V1.8逐股账本/集中度/技术风险/因子IC
+│   ├── attribute_v18_ch4.py          # 外部A股CH-4日收益回归
+│   ├── audit_v17_attribution.py      # V1.7收益时间戳与市场风险
+│   ├── build_v16_report.py
+│   ├── paper_journal.py
+│   └── ...                            # V1.0—V1.5历史研究脚本
+├── reports/
+│   ├── V18_ATTRIBUTION_REPORT.md     # 当前主要经济解释
+│   ├── V17_RETURN_AND_MARKET_ATTRIBUTION.md
+│   ├── V16_RESEARCH_REPORT.md
+│   ├── INTERVIEW_GUIDE.md
+│   ├── figures/                       # PNG，可在GitHub直接预览，含V1.8年度归因图
+│   ├── summary/                       # 不含完整私有账本的聚合CSV
+│   │   ├── v18_yearly_active_decomposition.csv
+│   │   ├── v18_contribution_concentration.csv
+│   │   ├── v18_top_security_drivers.csv
+│   │   ├── v18_stale_mark_summary.csv
+│   │   ├── v18_technical_style_exposures.csv
+│   │   ├── v18_factor_significance.csv
+│   │   ├── v18_ch4_regression.csv
+│   │   └── v18_corporate_action_case.csv
+│   ├── research_dashboard.html       # 早期探索性可下载仪表盘
+│   └── ...                            # V1.0—V1.6原报告和其他汇总
 └── tests/
+    ├── test_v18_attribution.py
     ├── test_execution_v16.py
     ├── test_paper_journal.py
     └── test_synthetic.py
 ```
 
-公开的收益口径审计CSV不含逐日现金、持仓价值与成本金额；完整账户核对表保存在本地被Git忽略的输出目录。
+`scripts/equity_alpha_v2/outputs/`、Qlib行情、明汯原始因子工作簿、完整每日持仓/订单/现金账、预测缓存和环境密钥均不在公开仓库。`sector_attribution.csv`与含规模/价值的`style_exposures.csv`未生成，因为必需的历史时点数据尚未齐备；已完成的是单独标明的技术风格暴露。实际提交文件可用 `git ls-files` 核对。

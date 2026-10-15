@@ -1,0 +1,40 @@
+{
+  "version": "1.8",
+  "subject": "V1.6 frozen Equal8__Buffer30_60 final account only",
+  "purpose": "Post-test explanation, not model selection or a new independent test",
+  "accounting": {
+    "initial_capital_cny": 1000000,
+    "unit": "Qlib adjusted units and adjusted prices; no verified raw-share or dividend cash ledger",
+    "mark": "Saved market close on ordinary days, saved market open on terminal day; forward-filled adjusted close only where original mark absent",
+    "gross_security_pnl": "ending_units * ending_mark - opening_units * prior_mark + sale_notional - purchase_notional",
+    "net_security_pnl": "gross_security_pnl - allocated_order_fees; execution slippage and impact are already in notional",
+    "realized_pnl": "moving-average execution-price basis excluding fees; sale proceeds less released basis",
+    "unrealized_pnl": "ending_units * (ending_mark - remaining_average_basis)",
+    "reconciliation_tolerance_cny": 0.00001
+  },
+  "factor_diagnostics": {
+    "features": "All 28 existing V1.6 cross-sectional technical features, no feature selection",
+    "forward_return": "Saved next-month open-to-open label; never interpreted as a factor-mimicking portfolio return",
+    "metric": "monthly cross-sectional Spearman IC",
+    "inference": "intercept-only OLS with HAC lag 3 on monthly IC, two-sided",
+    "multiple_testing": "Benjamini-Hochberg FDR across all 28 full-period feature tests; yearly splits descriptive only"
+  },
+  "external_ch4_regression": {
+    "source": "Mingshi Investment CH4 daily factor returns, source workbook supplied separately, not redistributed",
+    "dependent": "saved portfolio ordinary close-to-close daily return minus rf_dly",
+    "columns": "mktrf, SMB, VMG, PMO; original daily decimal units",
+    "primary_period": "all matched ordinary account dates in 2024-2025, complete before regression",
+    "sensitivity": "all available ordinary dates through source end 2026-08-31, with missing 2026-06 factor dates excluded and explicitly listed",
+    "models": "CH market-only and CH4 estimated on identical period rows",
+    "inference": "OLS HAC lag 5, two-sided 95% confidence interval, linear annualization times 252",
+    "interpretation": "post-test risk explanation, not new prediction test or model choice"
+  },
+  "external_data_gate": {
+    "sector_brinson": "Only if point-in-time industry mapping, dated CSI300 security weights and same-convention security returns are available and validated",
+    "size_value_exposure": "Only if historical market capitalization and point-in-time accounting data are available",
+    "multifactor_regression": "External CH4 daily factor file required; audit its date coverage and units before estimation",
+    "corporate_actions": "Only if independent unadjusted price and dividend/split/rights event source is available",
+    "total_return_benchmark": "Only if independently sourced CSI300 total-return daily levels align to the account boundary dates"
+  },
+  "publication": "Do not publish full orders, positions, daily security P&L, or cash ledger; publish summary aggregates and limitations"
+}

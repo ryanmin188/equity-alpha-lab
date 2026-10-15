@@ -7,3 +7,4 @@ scikit-learn==1.9.1
 lightgbm==4.7.0
 matplotlib==3.11.2
 tabulate==0.10.0
+openpyxl==3.1.5

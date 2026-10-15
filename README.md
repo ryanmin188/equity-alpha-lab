@@ -43,6 +43,8 @@
 
 ## 如何阅读与复现
 
+求职面试中的专业因子评价补充见[V1.9.1 因子研究报告](reports/V191_FACTOR_RESEARCH_SUPPLEMENT.md)：对冻结面板的28项特征做预处理、IC/ICIR、五/十分组和冗余诊断；真实行业/市值中性化因缺少历史时点数据仍标为未完成。可配合[因子研究面试说明](reports/FACTOR_RESEARCH_INTERVIEW_GUIDE.md)阅读。
+
 第一次看项目，建议依次读本页、[V1.8主要发现](reports/V18_ATTRIBUTION_REPORT.md)、[V1.6实验与执行](reports/V16_RESEARCH_REPORT.md)；[交互式HTML仪表盘](reports/research_dashboard.html)保留早期探索结果，其数据阶段与冻结最终测试不同，不能当作最新成绩。完整[文件结构](FILE_STRUCTURE.md)和[面试追问](reports/INTERVIEW_GUIDE.md)放在后面。GitHub会直接渲染Markdown报告和PNG图；HTML可下载本地打开，首页核心结果不依赖它。
 
 Python 3.12，依赖见[requirements.txt](requirements.txt)。没有Qlib行情也可运行人工数据测试：

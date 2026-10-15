@@ -1,0 +1,17 @@
+{
+  "status": "DATA_NOT_AVAILABLE",
+  "real_neutralized_ic": "DATA_NOT_AVAILABLE",
+  "real_neutralized_quantiles": "DATA_NOT_AVAILABLE",
+  "required_columns": [
+    "date",
+    "instrument",
+    "industry",
+    "market_cap",
+    "industry_valid_from",
+    "industry_valid_to",
+    "source_id",
+    "market_cap_asof",
+    "market_cap_unit"
+  ],
+  "note": "No historical industry or cap feed supplied; synthetic functions tested only"
+}

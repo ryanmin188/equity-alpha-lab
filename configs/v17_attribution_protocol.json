@@ -1,0 +1,23 @@
+{
+  "version": "V1.7-audit-1",
+  "scope": "Post-hoc attribution of the already opened V1.6 final period; no strategy/model/order changes and no new holdout claim",
+  "primary_candidate": "Equal8__Buffer30_60",
+  "input": "scripts/equity_alpha_v2/outputs/v16_improvements/final/Equal8__Buffer30_60/daily_account.csv",
+  "summary_input": "scripts/equity_alpha_v2/outputs/v16_improvements/final_summary.csv",
+  "valuation_rules": {
+    "first_row": "Initial cash at first open to first close, including first-day orders and costs; benchmark first open to first close",
+    "interior_rows": "Previous close to current close, including any current-open fills and costs for portfolio; benchmark close to close",
+    "terminal_row": "Previous close to final open for portfolio and benchmark; no terminal liquidation",
+    "calendar_gaps": "Weekends and holidays may appear as date gaps; the CSV alone cannot prove every exchange session is present"
+  },
+  "audit_tolerances": {"wealth_ratio_absolute": 1e-10, "nav_identity_cny": 1e-5, "cost_sum_cny": 1e-5},
+  "primary_market_regression": "OLS portfolio simple return on constant plus CSI300 simple price-index return, interior close-to-close rows only, zero risk-free assumption, HAC covariance maxlags=5, annualize intercept by 252",
+  "sensitivity_market_regression": "Same OLS/HAC on all rows including first open-to-close and final close-to-open boundary intervals; reproduce V1.6 estimate",
+  "annual_segments": "Group daily return intervals by valuation date calendar year; 2024 starts at first open and 2026 ends at final open. Return and relative log wealth use all rows; annual beta/alpha use only interior close-to-close rows in each year.",
+  "rolling_window": 126,
+  "rolling_regression": "126 interior close-to-close observations, one-step daily rolling OLS; annualized alpha=252*intercept, beta=slope, tracking error=sqrt(252)*sample standard deviation of arithmetic daily active returns; rolling estimates are descriptive, not repeat-tested significance claims",
+  "relative_log_decomposition": "Fixed full-interior-sample beta b. Market-relative contribution per row is log(1+b*r_b)-log(1+r_b); remainder is log(1+r_p)-log(1+b*r_b). Sum exactly equals log(W_p/W_b). Remainder includes selection, styles, alpha, costs, model error and all unmodeled effects, and is not identified stock-selection alpha.",
+  "boundary_sensitivity": "Report both all-row V1.6 regression and interior-only primary regression, without choosing whichever has a lower p-value",
+  "factor_industry_corporate_action": "Deferred: no verified external A-share factor returns, dated industry mapping, raw corporate-action cash-flow feed in the permitted CSV input. Do not substitute stock-characteristic ranks for factor returns or claim independent corporate-action reconciliation.",
+  "outputs": ["reports/summary/return_convention_audit.csv", "reports/summary/return_convention_anomalies.csv", "reports/summary/market_attribution.csv", "reports/summary/v17_market_regressions.csv", "reports/figures/v17_rolling_market_risk.png", "reports/V17_RETURN_AND_MARKET_ATTRIBUTION.md"]
+}

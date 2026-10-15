@@ -4,6 +4,8 @@
 
 这个项目研究一个实际的选股问题：月度量价信号在经过样本外选择、换手控制和交易约束后，是否仍能产生相对收益？研究从历史成分股和日频行情出发，贯通因子评价、模型比较、组合构建、逐日交易模拟和持仓归因。最终选择的是规则清晰的 **Equal8 + Buffer30/60**，而非训练期收益最高的候选。
 
+**快速体验：** [在线交互式研究展示](https://equity-alpha-lab-research.brinycharm64.chatgpt.site)可切换组合、因子与研究边界三个视角；[无行情合成 Demo](examples/README.md)直接运行项目原有执行引擎。两者均与冻结策略的历史结果明确区分。
+
 ## 策略与研究流程
 
 ```mermaid
@@ -44,6 +46,15 @@ flowchart LR
 
 ## 代码与复现
 
+初次接触项目，可以先用 Python 3.12 运行不依赖 Qlib 行情的示例：
+
+```bash
+python -m pip install -r examples/requirements.txt
+python examples/demo.py
+```
+
+示例生成10只合成证券与4次调仓，输出订单、费用和净值；其收益不是本页37.71%的历史研究结果。[展示页源码](showcase/README.md)的数据则来自已经保存的聚合摘要，[只读数据文件](showcase/data/research.json)记录了源文件哈希，便于追溯。
+
 | 内容 | 入口 |
 |---|---|
 | 研究主流程与模型比较 | [`research_v16_improvements.py`](scripts/equity_alpha_v2/research_v16_improvements.py) |
@@ -52,7 +63,7 @@ flowchart LR
 | 因子评价与截面中性化框架 | [`factor_research_v191.py`](scripts/equity_alpha_v2/factor_research_v191.py)、[`factor_neutralization_v191.py`](scripts/equity_alpha_v2/factor_neutralization_v191.py) |
 | 冻结配置与数值测试 | [`configs/`](configs/)、[`tests/`](tests/) |
 
-Python 3.12 环境的依赖见 [`requirements.txt`](requirements.txt)。无需行情数据即可运行合成数据测试：
+完整研究环境的依赖见 [`requirements.txt`](requirements.txt)。无需行情数据即可运行合成数据测试；GitHub Actions 也只执行这些合成与数学性质测试：
 
 ```powershell
 python -m venv .venv

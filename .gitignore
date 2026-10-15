@@ -24,7 +24,10 @@ qlib_data/
 scripts/equity_alpha_v2/outputs/
 outputs/
 reports/
+examples/demo_output/
 data/
+!showcase/data/
+!showcase/data/research.json
 datasets/
 cache/
 

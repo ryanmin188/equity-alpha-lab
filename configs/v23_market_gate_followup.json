@@ -1,0 +1,15 @@
+{
+  "classification": "Posthoc economic-risk hypothesis after signal, portfolio and multiscale experiments; all outcomes retained",
+  "hypothesis": "Low beta stock selection may miss broad rising-market risk premia; test observable market gates instead of calendar-year switching",
+  "reference": "https://github.com/QuantConnect/Tutorials/tree/master/04%20Strategy%20Library/37%20Momentum%20and%20State%20of%20Market%20Filters",
+  "beta": "Past 252 daily returns OLS with intercept against CSI300; minimum 202 finite pairs",
+  "cyclical_score": "0.5 cross-sectional percentile of beta + 0.5 percentile of existing five-day reversal",
+  "candidates": {
+    "R0_Cyclical": "Always cyclical score, exposes the unconditional risk premium control",
+    "R1_MA200": "Cyclical score if signal-close CSI300 > past200-close average; otherwise unchanged Equal8",
+    "R2_ROC252": "Cyclical score if signal-close CSI300 > close252 trading days ago; otherwise unchanged Equal8"
+  },
+  "execution": "E2 Buffer30/60, no leverage; identical base and cost/capacity stress settings",
+  "no_claim": "High beta return is not automatically stock-selection alpha; rules are not an exact replication of the reference's US long-short strategy",
+  "stop": "No optimization of lookback, gate threshold, beta/reversal mixing coefficient or year-specific parameters"
+}

@@ -1,0 +1,25 @@
+{
+  "version": "V2.3",
+  "created": "2026-10-16",
+  "status": "Exploratory historical research: all evaluation years have previously been opened",
+  "objective": "Beat the CSI300 price index separately in calendar 2024 and 2025 after modeled trading costs",
+  "immutable_baseline": "V1.6 signals, protocol, execution, saved accounts and earlier reports remain unchanged",
+  "execution": "Unmodified V2.2 E2; 1m CNY, 5bp slippage; Buffer30/60, equal weights, original fees and capacity",
+  "candidates": ["B0_Equal8", "S1_Trend", "S2_BalancedTrend", "S3_ResidualTrend", "S4_BalancedResidual", "S5_Adaptive24", "S6_Adaptive60"],
+  "trend": "Equal average of existing cross-sectional mom_120 and mom_252_skip20 ranks",
+  "residual": "Past 252 daily stock returns regressed on intercept and CSI300 return; sum of residuals in last 120 excluding last 20 days divided by their standard deviation; at least 202 regression and 80 scoring observations",
+  "balanced": "50% Equal8 percentile score plus 50% trend/residual percentile score; no year-specific switches",
+  "adaptive": "Signed trailing 24 or 60 mature monthly Rank IC weights over six economic families; minimum 18 months, divide each mean by sqrt(IC variance + 0.01), normalize absolute weights; no factor deletion",
+  "families": ["trend", "reversal", "defensive", "liquidity", "price_volume", "residual"],
+  "label_gate": "Training signal date < current signal date and maximum label exit date <= current signal date",
+  "evaluation": ["development_2017_2020", "reused_validation_2021_2023", "opened_2024_2026"],
+  "annual_convention": "Compound saved daily net returns, including initial open-to-close; benchmark daily changes use identical intervals; no calendar-year account resets",
+  "stress": "All candidates: 15bp slippage and 10m CNY opened-period accounts, no reselection",
+  "reporting": "Retain every trial; a historical goal pass is not independent alpha evidence; no guaranteed success",
+  "references": [
+    "https://github.com/microsoft/qlib/blob/main/qlib/contrib/data/loader.py",
+    "https://github.com/quantopian/alphalens/blob/master/alphalens/performance.py",
+    "https://github.com/cvxgrp/cvxportfolio",
+    "https://repub.eur.nl/pub/22252/ResidualMomentum-2011.pdf"
+  ]
+}

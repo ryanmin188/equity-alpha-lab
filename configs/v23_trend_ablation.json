@@ -1,0 +1,13 @@
+{
+  "classification": "Posthoc component ablation; registered after S2 led the dual-year minimum active-return comparison but missed 2025",
+  "question": "Do 120-day trend and 252-day trend excluding 20 days have incompatible holding-period behavior?",
+  "candidates": {
+    "T1_Mom120": "Existing positive mom_120 score",
+    "T2_Mom252Skip20": "Existing positive mom_252_skip20 score",
+    "T3_Equal8Mom120": "50:50 cross-sectional percentile scores of Equal8 and mom_120",
+    "T4_Equal8Mom252": "50:50 cross-sectional percentile scores of Equal8 and mom_252_skip20"
+  },
+  "execution": "Unmodified E2 Buffer30/60, equal weights, fixed original fees and costs",
+  "evaluation": "All four candidates, 2017-2020, 2021-2023, opened 2024-2026 plus both stress scenarios",
+  "stop": "No further trend windows or mixing coefficients in this round; publish no claim of independent validation"
+}

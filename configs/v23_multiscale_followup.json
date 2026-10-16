@@ -1,0 +1,13 @@
+{
+  "classification": "Posthoc extension after seven signal candidates failed dual-year objective",
+  "source": "https://github.com/microsoft/qlib/blob/main/qlib/contrib/data/loader.py",
+  "scope": "Independent implementation of selected Alpha158-style OHLCV feature families; not the full Alpha158 dataset or its published benchmark",
+  "windows": [5,10,20,60],
+  "models": ["M1_MultiscaleRidge", "M2_MultiscaleTree"],
+  "training": "Past at most 60 mature monthly dates, minimum 36; all stock labels in a training date must have exited by decision date",
+  "target": "Same-date percentile rank of saved next-open-to-next-open monthly return",
+  "hyperparameters": "Reuse V1.6 Ridge alpha=100 and fixed LGBM 160 trees, depth5, 15 leaves, learning rate0.03, min100, lambda20, seed42; no tuning",
+  "portfolio": "Unchanged E2, Buffer30/60 equal weights, 1m CNY, 5bp base",
+  "stress": "Both candidates 15bp and 10m capital, same opened interval",
+  "stop": "Two model candidates only; preserve both outcomes and do not declare independent final-test success"
+}

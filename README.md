@@ -61,9 +61,12 @@ python examples/demo.py
 | 研究主流程与模型比较 | [`research_v16_improvements.py`](scripts/equity_alpha_v2/research_v16_improvements.py) |
 | 模拟执行与账户 | [`execution_v16.py`](scripts/equity_alpha_v2/execution_v16.py) |
 | 执行偏差与持仓控制 | [`execution_v22.py`](scripts/equity_alpha_v2/execution_v22.py)、[`research_v22_execution.py`](scripts/equity_alpha_v2/research_v22_execution.py) |
+| 多窗口因子与组合对照 | [`research_v23_signals.py`](scripts/equity_alpha_v2/research_v23_signals.py)、[`research_v23_multiscale.py`](scripts/equity_alpha_v2/research_v23_multiscale.py)；比较固定合成、成熟标签滚动加权与94项价量特征，使用统一交易约束评价 |
 | 持仓损益与风险归因 | [`attribute_v18_holdings.py`](scripts/equity_alpha_v2/attribute_v18_holdings.py)、[`attribute_v18_ch4.py`](scripts/equity_alpha_v2/attribute_v18_ch4.py) |
 | 因子评价与截面中性化框架 | [`factor_research_v191.py`](scripts/equity_alpha_v2/factor_research_v191.py)、[`factor_neutralization_v191.py`](scripts/equity_alpha_v2/factor_neutralization_v191.py) |
 | 冻结配置与数值测试 | [`configs/`](configs/)、[`tests/`](tests/) |
+
+扩展研究将信号构造、组合规则与模拟执行分开比较，并保留成本压力和逐单核账接口；这些已打开历史上的探索不改变本页的冻结策略成绩。
 
 完整研究环境的依赖见 [`requirements.txt`](requirements.txt)。无需行情数据即可运行合成数据测试；GitHub Actions 也只执行这些合成与数学性质测试：
 

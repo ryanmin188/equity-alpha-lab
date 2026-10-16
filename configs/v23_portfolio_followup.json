@@ -1,0 +1,12 @@
+{
+  "registered_after": "First seven signal comparisons: S2 2025 return 12.57%, all failed dual-year objective",
+  "purpose": "Check signal responsiveness and diversification, not year-dependent strategy switching",
+  "portfolios": [
+    {"name": "Immediate30", "top_n": 30, "buffer_n": 30, "weighting": "equal"},
+    {"name": "Broad50", "top_n": 50, "buffer_n": 100, "weighting": "equal"}
+  ],
+  "signals": "All seven candidates, no screening by opened-period returns",
+  "execution": "Unmodified E2, unchanged costs and caps",
+  "periods": "Reused 2021-2023 and opened 2024-2026; yearly metrics from continuous accounts",
+  "classification": "Explicitly posthoc extension; cannot be called preregistered or independent final test"
+}

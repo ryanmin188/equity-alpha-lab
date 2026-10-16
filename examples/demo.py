@@ -15,6 +15,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts" / "equity_alpha_v2"))
 from execution_v16 import Market, run_account  # noqa: E402
+from execution_v22 import run_account as run_v22  # noqa: E402
 
 
 def build_example() -> tuple[pd.DataFrame, Market, dict, dict]:
@@ -72,21 +73,28 @@ def build_example() -> tuple[pd.DataFrame, Market, dict, dict]:
     return pd.DataFrame(rows), market, portfolio, config
 
 
-def run_demo() -> tuple[dict, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    return run_account(*build_example())
+def run_demo(regime: str = 'E0'):
+    inputs=build_example()
+    if regime=='E0':
+        return run_account(*inputs)
+    return run_v22(*inputs,regime=regime)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a synthetic Equal8-style turnover and execution demo")
     parser.add_argument("--output", type=Path, default=ROOT / "examples" / "demo_output")
+    parser.add_argument("--regime", choices=('E0','E1','E2'), default='E0')
     args = parser.parse_args()
-    summary, daily, orders, targets = run_demo()
+    result=run_demo(args.regime)
+    summary,daily,orders,targets=result[:4]
     args.output.mkdir(parents=True, exist_ok=True)
     daily.to_csv(args.output / "synthetic_daily.csv", index=False)
     orders.to_csv(args.output / "synthetic_orders.csv", index=False)
     targets.to_csv(args.output / "synthetic_rebalances.csv", index=False)
+    if len(result)==5:
+        result[4].to_csv(args.output / "synthetic_exposures.csv",index=False)
     print("SYNTHETIC EXAMPLE — not the published CSI300 performance")
-    print(f"Rebalances: {len(targets)} | order events: {len(orders)} | fees: CNY {summary['fees_cny']:.2f}")
+    print(f"Target decisions: {len(targets)} | order events: {len(orders)} | fees: CNY {summary['fees_cny']:.2f}")
     print(f"Terminal NAV: CNY {daily.nav.iloc[-1]:,.2f} | return: {summary['total_return']:.2%}")
     print(f"CSV output: {args.output.resolve()}")
 

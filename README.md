@@ -21,6 +21,7 @@ flowchart LR
 - **组合规则：** Equal8 将八项因子按预设方向等权合成；每次目标持有30只，原持仓排名仍在前60时优先保留，以降低不必要的换手。
 - **时间切分：** 2020年及以前用于开发，2021—2023年用于验证和选择。组合规则在打开2024年以后结果之前[固定于版本记录](https://github.com/ryanmin188/equity-alpha-lab/commit/3a8663e50bb69dca774f9feff837bf70f46aa551)。最终期按冻结流程逐月更新已成熟标签，不用最终期表现重新选择策略。
 - **执行建模：** 100万元初始资金；下一交易日开盘成交，纳入佣金、日期适用的卖出税费、5bp设定滑点、平方根冲击、滞后成交额容量上限、手数、T+1、拒单与部分成交。
+- **执行偏差诊断：** 独立比较目标权重、实际成交权重与日末估值权重，并检查最小申报手数、未成交旧仓和超权重持仓对结果的影响；[合成示例](examples/README.md)可直接切换三种执行规则。
 
 ## 历史模拟结果
 
@@ -59,6 +60,7 @@ python examples/demo.py
 |---|---|
 | 研究主流程与模型比较 | [`research_v16_improvements.py`](scripts/equity_alpha_v2/research_v16_improvements.py) |
 | 模拟执行与账户 | [`execution_v16.py`](scripts/equity_alpha_v2/execution_v16.py) |
+| 执行偏差与持仓控制 | [`execution_v22.py`](scripts/equity_alpha_v2/execution_v22.py)、[`research_v22_execution.py`](scripts/equity_alpha_v2/research_v22_execution.py) |
 | 持仓损益与风险归因 | [`attribute_v18_holdings.py`](scripts/equity_alpha_v2/attribute_v18_holdings.py)、[`attribute_v18_ch4.py`](scripts/equity_alpha_v2/attribute_v18_ch4.py) |
 | 因子评价与截面中性化框架 | [`factor_research_v191.py`](scripts/equity_alpha_v2/factor_research_v191.py)、[`factor_neutralization_v191.py`](scripts/equity_alpha_v2/factor_neutralization_v191.py) |
 | 冻结配置与数值测试 | [`configs/`](configs/)、[`tests/`](tests/) |

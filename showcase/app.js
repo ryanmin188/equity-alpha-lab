@@ -120,3 +120,22 @@ async function init() {
   }
 }
 init();
+
+async function initCandidate() {
+  try {
+    const response=await fetch('data/candidate.json');
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const candidate=await response.json();
+    const draw=()=>{
+      const s=candidate.scenarios[$('candidate-scenario').value], rows=s.daily;
+      const values=rows.flatMap(r=>[r[1],r[2]]), lo=Math.min(1,...values), hi=Math.max(...values);
+      const x=i=>55+770*i/(rows.length-1), y=v=>20+260*(hi-v)/(hi-lo);
+      const line=j=>rows.map((r,i)=>(i?'L':'M')+x(i).toFixed(2)+','+y(r[j]).toFixed(2)).join(' ');
+      const grid=Array.from({length:5},(_,i)=>{const v=lo+(hi-lo)*i/4;return '<text x="8" y="'+(y(v)+4)+'" fill="#aabccd" font-size="12">'+v.toFixed(2)+'</text><line x1="55" x2="825" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#31445a"/>';}).join('');
+      $('candidate-chart').innerHTML='<svg viewBox="0 0 850 320" role="img" aria-label="趋势融合候选与价格指数净值"><title>TrendBlend20 与沪深300价格指数</title>'+grid+'<path d="'+line(2)+'" fill="none" stroke="#e9bd72" stroke-width="2"/><path d="'+line(1)+'" fill="none" stroke="#70e1c0" stroke-width="3"/><text x="55" y="310" fill="#aabccd">2024-01</text><text x="750" y="310" fill="#aabccd">2026-10</text></svg>';
+      $('candidate-results').innerHTML='<div class="table-scroll"><table><thead><tr><th>年份</th><th>候选收益</th><th>基准收益</th><th>收益差（百分点）</th></tr></thead><tbody>'+s.annual.map(r=>'<tr><td>'+r.year+(r.year===2026?'（截至10月8日）':'')+'</td><td>'+pct(r.strategy_return)+'</td><td>'+pct(r.benchmark_return)+'</td><td>'+num(100*r.active_pp,2)+'</td></tr>').join('')+'</tbody></table></div><p>累计收益 <strong>'+pct(s.total_return)+'</strong> · 最大回撤 <strong>'+pct(s.max_drawdown)+'</strong> · 最高日末单股权重 '+pct(s.max_marked_weight)+'</p>';
+    };
+    $('candidate-scenario').addEventListener('change',draw);draw();
+  } catch(err) { $('candidate-chart').textContent='候选数据加载失败：'+err.message; }
+}
+initCandidate();

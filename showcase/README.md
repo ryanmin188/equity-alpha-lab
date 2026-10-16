@@ -13,3 +13,5 @@ python scripts/equity_alpha_v2/build_showcase_data.py --summary-dir reports/summ
 ```
 
 生成程序校验冻结观察区间、期末净值、484日同样本回归与28项因子数量，并在 JSON 中保留源摘要的 SHA-256。公开数据属于历史模拟和事后分析，不是新样本或实盘记录。
+
+新增的“趋势融合候选”视图读取独立的 `data/candidate.json`，主场景为100万元模拟资金，支持15bp滑点和1000万元容量场景对照。该候选为已打开历史上的研究结果；冻结基线的 CH-4 归因不适用于新候选。候选聚合数据由 `python scripts/equity_alpha_v2/build_v24_showcase.py` 从本地保存的账户和核对结果生成，公开内容仅含组合净值与摘要。

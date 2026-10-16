@@ -1,0 +1,15 @@
+{
+  "candidate": "TrendBlend20",
+  "registered_on": "2026-10-16",
+  "research_status": "Selected after inspecting opened 2024-2026 history; forward candidate only, not independent validated alpha",
+  "signal": "0.25 * cross-sectional percentile rank of frozen Equal8 score + 0.75 * percentile rank of close[t-20]/close[t-252]-1",
+  "rank_scale": "Both percentile ranks transformed by 2*rank-1; missing factor rank gets neutral0",
+  "universe": "Saved Qlib historical CSI300 membership and signal-date coverage eligibility",
+  "frequency": "Month-end close signals; next-session open execution",
+  "portfolio": {"name":"Buffer20_40","top_n":20,"buffer_n":40,"weighting":"equal"},
+  "execution": "execution_v24, prior-session volume gate, original costs/capacity and target max5%; passive breaches and blocked orders remain possible",
+  "first_truly_new_signal": "Only a signal formed after 2026-10-16 with then-current authorized data can start forward observation; no backdated signal is independent",
+  "initial_capital_cny": 1000000,
+  "comparison": "CSI300 price index, not dividend-inclusive total return",
+  "scope": "A numerical dual-year historical goal pass at1m, not a guarantee of profitability or 10m capacity"
+}

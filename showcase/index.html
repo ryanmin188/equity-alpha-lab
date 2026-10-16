@@ -10,27 +10,32 @@
 <div class="page-shell">
   <header class="site-header">
     <a class="brand" href="./" aria-label="Equity Alpha Lab 首页"><span class="brand-mark">↗</span><span>Equity Alpha Lab<small>沪深300多因子研究</small></span></a>
-    <div class="header-actions"><span class="status-dot">冻结研究 · 只读展示</span><a href="https://github.com/ryanmin188/equity-alpha-lab">查看 GitHub ↗</a></div>
+    <div class="header-actions"><span class="status-dot">100万元模拟 · 研究展示</span><a href="https://github.com/ryanmin188/equity-alpha-lab">查看 GitHub ↗</a></div>
   </header>
   <main>
     <section class="intro"><div class="eyebrow">RESEARCH SHOWCASE / 2024—2026</div>
       <h1>从选股信号，到可以<br><em>解释的组合结果。</em></h1>
-      <p>围绕历史沪深300成分股的个人量化研究项目。这里呈现冻结策略的模拟表现、因子评价与收益归因；图表只读取保存的聚合结果。</p>
+      <p>围绕历史沪深300成分股的个人量化研究项目。这里呈现趋势融合候选、冻结基线、因子评价与收益归因；图表只读取保存的聚合结果。</p>
       <div class="intro-actions"><a class="primary-link" href="#explorer">探索研究结果 <span>↗</span></a><a class="text-link" href="https://github.com/ryanmin188/equity-alpha-lab/tree/main/examples">运行合成 Demo →</a></div>
     </section>
     <section class="metric-strip" aria-label="研究关键指标">
-      <article><span>冻结组合累计模拟收益</span><strong>37.71<small>%</small></strong><span>2024-01-02 至 2026-10-08</span></article>
-      <article><span>同期沪深300价格指数</span><strong>27.10<small>%</small></strong><span>简单累计收益差 +10.61 个百分点</span></article>
-      <article><span>CH-4 风格调整后 Alpha</span><strong>0.83<small>%</small></strong><span>线性年化截距 · HAC p = 0.885</span></article>
+      <article><span>TrendBlend20 累计模拟收益</span><strong>51.97<small>%</small></strong><span>2024-01-02 至 2026-10-08</span></article>
+      <article><span>同期沪深300价格指数</span><strong>27.10<small>%</small></strong><span>初始资金 100 万元 · 含模拟交易成本</span></article>
+      <article><span>TrendBlend20 全期最大回撤</span><strong>27.14<small>%</small></strong><span>历史候选 · 非独立样本外验证</span></article>
     </section>
     <section class="explorer" id="explorer" aria-labelledby="explorer-title">
-      <div class="explorer-top"><div><div class="eyebrow light">EXPLORE THE EVIDENCE</div><h2 id="explorer-title">研究结果交互视图</h2><p>切换视角，查看同一套冻结数据的表现、因子与验证边界。</p></div><span class="readonly">● 只读 · 不重新优化</span></div>
-      <div class="tabs" role="tablist" aria-label="研究视角">
-        <button class="tab active" role="tab" aria-selected="true" aria-controls="portfolio-panel" id="portfolio-tab" data-tab="portfolio">01 组合表现</button>
+      <div class="explorer-top"><div><div class="eyebrow light">EXPLORE THE EVIDENCE</div><h2 id="explorer-title">研究结果交互视图</h2><p>对照新候选与冻结基线，查看信号、收益及执行约束。</p></div><span class="readonly">● 只读 · 不重新优化</span></div>
+      <div class="tabs" role="tablist" aria-label="研究视角"><button class="tab active" role="tab" aria-selected="true" aria-controls="candidate-panel" id="candidate-tab" data-tab="candidate">趋势融合候选</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="portfolio-panel" id="portfolio-tab" data-tab="portfolio">01 冻结基线</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="factor-panel" id="factor-tab" data-tab="factor">02 因子评价</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="integrity-panel" id="integrity-tab" data-tab="integrity">03 研究边界</button>
       </div>
-      <div class="panel" id="portfolio-panel" role="tabpanel" aria-labelledby="portfolio-tab">
+      <div class="panel" id="candidate-panel" role="tabpanel" aria-labelledby="candidate-tab">
+<article class="card"><div class="card-heading"><div><span class="overline">TRENDBLEND20 / 100万元主场景</span><h3>趋势与多因子融合</h3></div><label>模拟场景 <select id="candidate-scenario"><option value="base">100万元 · 5bp滑点</option><option value="slip15">100万元 · 15bp滑点</option><option value="capital10m">1000万元 · 容量诊断</option></select></label></div>
+<p>25% Equal8 排名 + 75% 跳过最近20日的252日动量排名；月度调仓，目标20只，前40名缓冲保留。</p><div id="candidate-chart" class="chart-wrap"></div><div class="chart-legend"><span><i class="swatch teal"></i>TrendBlend20</span><span><i class="swatch gold"></i>沪深300价格指数</span></div><div id="candidate-results"></div>
+<p class="chart-note">2024-01-02—2026-10-08，首日开盘建仓、末日开盘估值；2026年不是完整自然年。包含模型设定的费用、滑点与冲击。场景变更会改变成交和持仓，收益并非同一账本上简单加减成本。</p></article>
+<article class="card"><h3>从信号到执行的可复核链条</h3><p>下一交易日开盘执行，成交量门槛仅使用上一交易日信息。未来行情与标签扰动未改变历史特征及订单，逐股损益可还原净资产变化。</p><p>该候选经过已打开历史区间的比较筛选，计算不使用未来信息，但不属于独立样本外证明。1000万元场景未能在2024、2025两年跑赢基准；主展示限定100万元。CH-4归因与28因子检验见其他视图，属于原冻结研究，不是本候选的新归因结果。</p></article></div>
+<div class="panel" id="portfolio-panel" hidden role="tabpanel" aria-labelledby="portfolio-tab">
         <div class="panel-grid">
           <article class="card chart-card"><div class="card-heading"><div><span class="overline">PORTFOLIO EXPLORER</span><h3>账户路径</h3></div><div class="segmented"><button data-chart="wealth" class="selected">累计净值</button><button data-chart="drawdown">回撤</button></div></div><div id="portfolio-chart" class="chart-wrap" aria-live="polite">正在加载已保存的研究数据…</div><div class="chart-legend"><span><i class="swatch teal"></i>Equal8 + Buffer30/60</span><span><i class="swatch gold"></i>沪深300价格指数</span></div><p class="chart-note">首日含开盘建仓至收盘；末日为开盘估值。净值以首个交易日开盘前资金为 1。</p></article>
           <article class="card compact-card"><span class="overline">WHAT CHANGED BY YEAR</span><h3>年度相对财富贡献</h3><p>2024 年建立优势，2025 年在上涨市场中回吐。以下为逐日链接后的对数贡献，并非行业配置归因。</p><div id="year-bars" class="year-bars"></div><div class="small-divider"></div><div class="inline-stat"><span>曾持有证券</span><strong>126 只</strong></div><div class="inline-stat"><span>模拟订单事件</span><strong>1,475 条</strong></div><div class="inline-stat"><span>逐股核对残差</span><strong>&lt; 0.00001 元</strong></div></article>

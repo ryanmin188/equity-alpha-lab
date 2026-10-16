@@ -1,0 +1,12 @@
+{
+  "created": "2026-10-16",
+  "objective": "Same causal rules beat CSI300 price index in both 2024 and 2025 after modeled costs",
+  "classification": "Opened-history search, including research selection bias; never a new independent final test",
+  "preserve": "V1.6-V2.3 code, results and records",
+  "time_fix": "Opening-order availability uses prior-session volume, not current full-session volume. Capacity and volatility remain lagged exactly once.",
+  "first_batch": "Equal8 ranks blended with 120d momentum or 252d momentum excluding20d, Equal8 weights 0.25/0.5/0.75; all six under Buffer30/60 and Buffer20/40",
+  "next_batch_if_needed": "Weekly signal and holding-period research using the same causality gates; register details before evaluation",
+  "costs": "Original 1m CNY, fees/taxes, 5bp slippage, impact, 1% lagged ADV; successful historical candidates additionally evaluated at15bp and10m",
+  "search_reporting": "Keep all candidates, no manual calendar-year switches, no ex-post stock deletion, no outcome-based feature threshold inside signal",
+  "references": ["https://github.com/microsoft/qlib/blob/main/qlib/contrib/strategy/signal_strategy.py", "https://www.quantconnect.com/research/15311/short-term-reversal-strategy-in-stocks/"]
+}

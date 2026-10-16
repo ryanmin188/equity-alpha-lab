@@ -1,0 +1,19 @@
+{
+  "version": "V2.2 execution reality check",
+  "frozen_on": "2026-10-15",
+  "sample_status": "All 2021-2026 observations have been opened; every historical comparison is exploratory, not a new final test.",
+  "candidates": ["B0_Equal8", "A2_CH4_residual_ridge", "B2_state_tree"],
+  "common_interval": "2024-01 through the A2 December 2025 signal exit",
+  "earlier_interval": "2021-2023 previously reused validation; descriptive execution robustness only, not an untouched holdout",
+  "additional_interval": "B0 and B2 through the August 2026 signal exit",
+  "E0": "Unmodified V1.6 execution_v16.run_account; reconstruct and compare saved accounts without modifying them.",
+  "E1": "Same scores, portfolio and costs; after turnover scaling project undersized partial sells to the nearest legal keep or full-exit target, then cancel lowest-priority rebalance orders if projected gross turnover exceeds the unchanged 80% budget. No daily risk trades.",
+  "E2": "E1 plus pre-signal buy capacity gate, priority for overweight sells, and daily prior-close risk-only sell orders when an actual stock weight exceeds 5%, targeting 4.5% subject to lot, liquidity and price limits. Every non-target holding receives a daily full-exit retry until filled or selected again. No risk-only buys; daily risk and cleanup orders are outside the monthly rebalance budget.",
+  "lot_policy": "Main board 100-share sell increments; STAR minimum 200 raw shares then 1-share increments; complete odd-lot exit permitted. Adjusted units use the provider factor as a proxy, not independently verified broker shares.",
+  "turnover_budget": "80% gross turnover applies after the initial account funding trade, consistent with V1.6; E2 risk-only sell orders are separate risk interventions.",
+  "cost_capacity_stress": "Use V1.6 prespecified 15 bps slippage at CNY 1 million and base 5 bps slippage at CNY 10 million; E0 and E2 compared on identical B0 signals and periods.",
+  "horizon_diagnostic": "All existing 28 frozen technical features, raw direction, fixed next-open to open 5/20/60 trading-day labels; report monthly Rank IC and five-bin returns separately for 2017-2020, 2021-2023, and already-opened 2024-2026. No horizon is selected on the opened period.",
+  "pairwise_diagnostic": "One same-date pairwise logistic model on eight frozen features, deterministic 150 stock pairs per mature month, prior 60 mature months, and a Ridge ranking control. Compare Rank IC only; no portfolio promotion on opened data.",
+  "risk_diagnostic": "One fixed 252-day rolling covariance comparison: sample, diagonal and Ledoit-Wolf shrinkage; evaluate subsequent 20-day realized variance calibration for deterministic equal-weight stock baskets, with no return optimization.",
+  "decision": "Never promote a candidate using opened-history E0/E1/E2 return; compare execution feasibility, account identity and concentration first. No iteration of the frozen rules based on resulting return."
+}
